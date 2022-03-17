@@ -37,11 +37,11 @@ export class Alert extends HTMLElement {
         });
     }
 
-    close(element = this) {
-        element.classList.add("out");
+    close() {
+        this.classList.add("out");
         window.setTimeout(async () => {
-            await slideUp(element);
-            element.parentElement.removeChild(element);
+            await slideUp(this);
+            this.parentElement.removeChild(this);
         }, 500);
     }
 
@@ -72,6 +72,12 @@ export class FloatingAlert extends Alert {
             }, duration * 1000);
         }
 
-        super.innerHTML = super.innerHTML + progressBar;
+        this.innerHTML = super.innerHTML + progressBar;
+
+        // On supprime l'element lorsque le button x est cliqué
+        this.querySelector(".alert-close").addEventListener("click", (e) => {
+            e.preventDefault();
+            this.close();
+        });
     }
 }

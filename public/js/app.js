@@ -44,12 +44,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _functions_animations__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../functions/animations */ "./resources/js/functions/animations.js");
 function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
 
-function set(target, property, value, receiver) { if (typeof Reflect !== "undefined" && Reflect.set) { set = Reflect.set; } else { set = function set(target, property, value, receiver) { var base = _superPropBase(target, property); var desc; if (base) { desc = Object.getOwnPropertyDescriptor(base, property); if (desc.set) { desc.set.call(receiver, value); return true; } else if (!desc.writable) { return false; } } desc = Object.getOwnPropertyDescriptor(receiver, property); if (desc) { if (!desc.writable) { return false; } desc.value = value; Object.defineProperty(receiver, property, desc); } else { _defineProperty(receiver, property, value); } return true; }; } return set(target, property, value, receiver); }
-
-function _set(target, property, value, receiver, isStrict) { var s = set(target, property, value, receiver || target); if (!s && isStrict) { throw new Error('failed to set property'); } return value; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 function _get() { if (typeof Reflect !== "undefined" && Reflect.get) { _get = Reflect.get; } else { _get = function _get(target, property, receiver) { var base = _superPropBase(target, property); if (!base) return; var desc = Object.getOwnPropertyDescriptor(base, property); if (desc.get) { return desc.get.call(arguments.length < 3 ? target : receiver); } return desc.value; }; } return _get.apply(this, arguments); }
 
 function _superPropBase(object, property) { while (!Object.prototype.hasOwnProperty.call(object, property)) { object = _getPrototypeOf(object); if (object === null) break; } return object; }
@@ -122,18 +116,19 @@ var Alert = /*#__PURE__*/function (_HTMLElement) {
   }, {
     key: "close",
     value: function close() {
-      var element = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this;
-      element.classList.add("out");
+      var _this2 = this;
+
+      this.classList.add("out");
       window.setTimeout( /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
                 _context.next = 2;
-                return (0,_functions_animations__WEBPACK_IMPORTED_MODULE_1__.slideUp)(element);
+                return (0,_functions_animations__WEBPACK_IMPORTED_MODULE_1__.slideUp)(_this2);
 
               case 2:
-                element.parentElement.removeChild(element);
+                _this2.parentElement.removeChild(_this2);
 
               case 3:
               case "end":
@@ -172,7 +167,7 @@ var FloatingAlert = /*#__PURE__*/function (_Alert) {
   _createClass(FloatingAlert, [{
     key: "connectedCallback",
     value: function connectedCallback() {
-      var _this2 = this;
+      var _this3 = this;
 
       _get(_getPrototypeOf(FloatingAlert.prototype), "connectedCallback", this).call(this);
 
@@ -187,7 +182,7 @@ var FloatingAlert = /*#__PURE__*/function (_Alert) {
             while (1) {
               switch (_context3.prev = _context3.next) {
                 case 0:
-                  _this2.classList.add("out");
+                  _this3.classList.add("out");
 
                   window.setTimeout( /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
                     return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
@@ -195,10 +190,10 @@ var FloatingAlert = /*#__PURE__*/function (_Alert) {
                         switch (_context2.prev = _context2.next) {
                           case 0:
                             _context2.next = 2;
-                            return (0,_functions_animations__WEBPACK_IMPORTED_MODULE_1__.slideUp)(_this2);
+                            return (0,_functions_animations__WEBPACK_IMPORTED_MODULE_1__.slideUp)(_this3);
 
                           case 2:
-                            _this2.parentElement.removeChild(_this2);
+                            _this3.parentElement.removeChild(_this3);
 
                           case 3:
                           case "end":
@@ -217,7 +212,13 @@ var FloatingAlert = /*#__PURE__*/function (_Alert) {
         })), duration * 1000);
       }
 
-      _set(_getPrototypeOf(FloatingAlert.prototype), "innerHTML", _get(_getPrototypeOf(FloatingAlert.prototype), "innerHTML", this) + progressBar, this, true);
+      this.innerHTML = _get(_getPrototypeOf(FloatingAlert.prototype), "innerHTML", this) + progressBar; // On supprime l'element lorsque le button x est cliqué
+
+      this.querySelector(".alert-close").addEventListener("click", function (e) {
+        e.preventDefault();
+
+        _this3.close();
+      });
     }
   }]);
 
