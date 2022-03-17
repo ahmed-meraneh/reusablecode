@@ -1,0 +1,36 @@
+@import "functions";
+
+// Responsive
+// ==================
+@mixin up($size) {
+    $size: strip-unit($size) * 1px;
+    @media (min-width: $size) {
+        @content;
+    }
+}
+@mixin down($size) {
+    $size: strip-unit($size) * 1px;
+    @media (max-width: $size) {
+        @content;
+    }
+}
+@mixin between($down, $up) {
+    $down: strip-unit($down) * 1px;
+    $up: strip-unit($up) * 1px;
+    @media (min-width: $down) and (max-width: $up) {
+        @content;
+    }
+}
+
+// Espacement
+// ==================
+@mixin container($width, $padding) {
+    width: 100%;
+    padding-left: $padding;
+    padding-right: $padding;
+
+    @include up($width + 2 * $padding) {
+        padding-left: calc(50vw - #{$width / 2});
+        padding-right: calc(50vw - #{$width / 2});
+    }
+}
